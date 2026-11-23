@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b14">
+<title>صانع السيرة الذاتية وبطاقات البيانات الاحترافية | CV Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root{--bg:#070b14;--panel:rgba(16,23,40,.8);--bd:rgba(255,255,255,.1);--ac:#3b82f6;--ac2:#8b5cf6;--mut:#94a3b8}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo',sans-serif}
+body{background:var(--bg);color:#f8fafc;min-height:100vh;overflow-x:hidden;padding-bottom:92px}
+#rain{position:fixed;inset:0;z-index:-2;width:100%;height:100%}
+.orb{position:fixed;z-index:-1;border-radius:50%;filter:blur(90px);opacity:.3;animation:fl 12s infinite alternate ease-in-out;pointer-events:none}
+.o1{width:320px;height:320px;background:#2563eb;top:-60px;right:8%}.o2{width:280px;height:280px;background:#7c3aed;bottom:40px;left:8%;animation-delay:-5s}
+@keyframes fl{to{transform:translate(-30px,40px) scale(1.15)}}
+
+/* ===== Loader ===== */
+#loader{position:fixed;inset:0;z-index:999;background:radial-gradient(circle at 50% 40%,#0c1424,#04060c 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;transition:opacity .8s,transform .8s,visibility .8s;cursor:pointer;overflow:hidden}
+#loader.out{opacity:0;transform:scale(1.08);visibility:hidden}
+#lcode{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
+.lname{position:relative;font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(2rem,9vw,4.6rem);letter-spacing:.14em;direction:ltr;text-align:center;line-height:1.1;z-index:2}
+.ch{display:inline-block;opacity:0;background:linear-gradient(180deg,#fff,#93c5fd);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;transform:translateY(-140px);filter:blur(8px);animation:drop .9s cubic-bezier(.2,.9,.3,1.15) forwards;animation-delay:var(--d)}
+.ch.sp{width:.4em}
+@keyframes drop{60%{opacity:1}to{opacity:1;transform:none;filter:none}}
+.lname::before,.lname::after{content:attr(data-t);position:absolute;inset:0;opacity:0;direction:ltr}
+.lname.gl::before{color:#22d3ee;animation:g1 .7s steps(2) 2;opacity:.8}
+.lname.gl::after{color:#f472b6;animation:g2 .7s steps(2) 2;opacity:.8}
+@keyframes g1{0%{clip-path:inset(10% 0 70% 0);transform:translate(-6px,0)}25%{clip-path:inset(55% 0 20% 0);transform:translate(6px,0)}50%{clip-path:inset(30% 0 45% 0);transform:translate(-4px,0)}75%{clip-path:inset(75% 0 5% 0);transform:translate(4px,0)}100%{clip-path:inset(0);opacity:0}}
+@keyframes g2{0%{clip-path:inset(60% 0 10% 0);transform:translate(6px,0)}25%{clip-path:inset(15% 0 65% 0);transform:translate(-6px,0)}50%{clip-path:inset(45% 0 30% 0);transform:translate(4px,0)}75%{clip-path:inset(5% 0 80% 0);transform:translate(-4px,0)}100%{clip-path:inset(0);opacity:0}}
+.lline{width:0;height:2px;background:linear-gradient(90deg,transparent,#60a5fa,#c084fc,transparent);animation:ln 1.2s ease 1.5s forwards;z-index:2}
+@keyframes ln{to{width:min(360px,70vw)}}
+.lsub{font-size:clamp(1rem,3.6vw,1.35rem);font-weight:700;color:#cbd5e1;opacity:0;animation:fi .9s ease 1.9s forwards;z-index:2;text-align:center;padding:0 16px}
+.lsub b{color:#60a5fa}
+@keyframes fi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.lbar{width:min(260px,60vw);height:3px;background:rgba(255,255,255,.1);border-radius:9px;overflow:hidden;z-index:2}
+.lbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3b82f6,#a78bfa);animation:bar 3.4s ease-in-out forwards}
+@keyframes bar{to{width:100%}}
+
+/* ===== Header ===== */
+header{padding:14px 4%;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--bd);backdrop-filter:blur(14px);background:rgba(7,11,20,.72);position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.3rem;font-weight:900;background:linear-gradient(135deg,#60a5fa,#c084fc);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.logo i{-webkit-text-fill-color:#60a5fa}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.btn{padding:10px 16px;border-radius:12px;border:0;font-weight:800;font-size:.9rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;color:#fff;transition:.25s;text-decoration:none}
+.btn:hover{transform:translateY(-2px)}.btn:disabled{opacity:.7;cursor:wait}
+.pri{background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 4px 20px rgba(59,130,246,.45)}
+.wa{background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 4px 18px rgba(34,197,94,.35)}
+.sec{background:rgba(255,255,255,.08);border:1px solid var(--bd)}
+
+/* ===== Layout ===== */
+.main{max-width:1440px;margin:24px auto;padding:0 20px;display:grid;grid-template-columns:420px 1fr;gap:28px;align-items:start}
+.panel{background:var(--panel);border:1px solid var(--bd);border-radius:20px;padding:22px;backdrop-filter:blur(16px);box-shadow:0 20px 50px rgba(0,0,0,.4);animation:up .7s ease-out}
+@keyframes up{from{opacity:0;transform:translateY(24px)}}
+.st{font-size:1.1rem;font-weight:800;margin:0 0 14px;display:flex;align-items:center;gap:10px;color:#93c5fd}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:span 2}
+.fg label{display:block;font-size:.85rem;font-weight:700;color:#cbd5e1;margin-bottom:5px}
+.iw{position:relative}.iw i{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:#64748b;transition:.3s}
+.iw:focus-within i{color:var(--ac)}
+.fc{width:100%;padding:11px 38px 11px 12px;background:rgba(15,23,42,.75);border:1px solid rgba(255,255,255,.12);border-radius:12px;color:#fff;font-size:.92rem;transition:.25s}
+.fc:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 3px rgba(59,130,246,.25)}
+.tools{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.tools .btn{flex:1;justify-content:center;font-size:.82rem;padding:10px 8px}
+input[type=color]{width:100%;height:100%;border:0;background:none;cursor:pointer;opacity:0;position:absolute;inset:0}
+.cbtn{position:relative;overflow:hidden}
+.div{height:1px;background:var(--bd);margin:20px 0}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-height:300px;overflow-y:auto;padding:3px}
+.tc{background:rgba(15,23,42,.65);border:2px solid transparent;border-radius:12px;padding:9px 11px;cursor:pointer;display:flex;align-items:center;gap:9px;transition:.25s}
+.tc:hover{transform:translateY(-2px);background:rgba(30,41,59,.9)}
+.tc.on{border-color:#60a5fa;background:rgba(59,130,246,.15);box-shadow:0 0 15px rgba(59,130,246,.25)}
+.dot{width:26px;height:26px;border-radius:8px;flex-shrink:0;border:1px solid rgba(255,255,255,.25)}
+.tc h4{font-size:.8rem;font-weight:800}.tc span{font-size:.68rem;color:var(--mut)}
+.prev{display:flex;flex-direction:column;align-items:center;min-width:0;animation:up .85s ease-out}
+.tb{width:100%;max-width:794px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:10px 16px;background:var(--panel);border:1px solid var(--bd);border-radius:14px;font-size:.85rem}
+.live{display:flex;align-items:center;gap:8px;color:#34d399;font-weight:800}
+.live::before{content:"";width:9px;height:9px;border-radius:50%;background:#10b981;animation:pu 1.5s infinite}
+@keyframes pu{0%{box-shadow:0 0 0 0 rgba(16,185,129,.7)}70%,100%{box-shadow:0 0 0 8px transparent}}
+.stage{width:100%;display:flex;justify-content:center;overflow:hidden}
+
+/* ===== Paper ===== */
+.paper{width:794px;height:1122px;flex-shrink:0;position:relative;overflow:hidden;direction:rtl;background:var(--bg);color:var(--ink);box-shadow:0 25px 60px rgba(0,0,0,.6);transform-origin:top center}
+.paper *{font-family:'Cairo',sans-serif}
+.paper{--bg:#fff}
+.paper::before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:var(--b);opacity:.07;left:-110px;bottom:-110px}
+.paper::after{content:"";position:absolute;width:200px;height:200px;border-radius:50%;border:30px solid var(--a);opacity:.05;right:-60px;bottom:120px}
+.paper h1{font-size:2.15rem;font-weight:900;line-height:1.3}
+.av{width:104px;height:104px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--b));display:grid;place-items:center;font-size:2.6rem;font-weight:900;color:#fff;overflow:hidden;border:4px solid rgba(255,255,255,.4);flex-shrink:0}
+.av img{width:100%;height:100%;object-fit:cover}
+.row{display:flex;gap:13px;align-items:center;padding:12px 15px;background:var(--card);border-radius:14px;border:1px solid rgba(128,128,128,.16);position:relative;z-index:1}
+.row i{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--a),var(--b));color:#fff;display:grid;place-items:center;flex-shrink:0}
+.row small{display:block;color:var(--mut);font-weight:700;font-size:.76rem}.row b{font-size:1rem;font-weight:800;word-break:break-word}
+.bio{padding:18px 20px;background:var(--card);border-radius:14px;border-right:5px solid var(--b);line-height:1.9;color:var(--mut);font-weight:600;position:relative;z-index:1}
+.pf{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:.72rem;opacity:.5;z-index:1}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.wide{grid-column:span 2}
+.paper.anim .row,.paper.anim .bio{animation:ri .55s both;animation-delay:calc(var(--i,0)*70ms)}
+@keyframes ri{from{opacity:0;transform:translateY(16px)}}
+.paper.pop{animation:pp .5s cubic-bezier(.16,1,.3,1)}
+@keyframes pp{from{opacity:.3;filter:blur(4px)}}
+.exp *,.exp{animation:none!important}
+/* L1 */
+.l1{padding:44px}
+.l1 .hd{display:flex;gap:24px;align-items:center;background:linear-gradient(135deg,var(--a),var(--b));color:var(--hd);padding:38px;border-radius:24px;margin-bottom:30px;box-shadow:0 14px 30px rgba(0,0,0,.2);position:relative;z-index:1}
+.l1 .hd p{opacity:.92;margin-top:6px;font-size:1.1rem}
+.tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 14px;border-radius:20px;font-size:.8rem;margin-bottom:8px}
+.stt{font-size:1.2rem;font-weight:800;color:var(--a);border-right:5px solid var(--b);padding-right:12px;margin-bottom:16px;position:relative;z-index:1}
+.l1 .bio{margin-top:24px}
+/* L2 */
+.l2{display:grid;grid-template-columns:262px 1fr}
+.l2 aside{background:linear-gradient(180deg,var(--a),var(--b));color:var(--hd);padding:46px 22px;text-align:center}
+.l2 aside .av{margin:0 auto 22px;width:120px;height:120px}
+.l2 aside .row{background:rgba(255,255,255,.13);border:0;margin-bottom:10px;text-align:right}
+.l2 aside .row small{color:rgba(255,255,255,.72)}.l2 aside .row i{background:rgba(255,255,255,.22)}
+.l2 section{padding:56px 38px;display:flex;flex-direction:column;gap:14px}
+.l2 .role{color:var(--a);font-weight:800;font-size:1.15rem;margin:-4px 0 12px}.l2 .pf{display:none}
+/* L3 */
+.l3{padding:34px}
+.frame{height:100%;border:7px double var(--a);padding:38px 40px;text-align:center;position:relative;z-index:1}
+.frame .av{margin:0 auto 16px}.frame h1{color:var(--b)}.frame .role{opacity:.85;margin-top:6px;font-size:1.1rem}
+.line{height:2px;background:linear-gradient(90deg,transparent,var(--a),transparent);margin:24px 0}
+.frame .col{display:flex;flex-direction:column;gap:11px;text-align:right}.frame .bio{margin-top:20px;border:0;border-top:2px solid var(--a);text-align:center}
+/* L4 */
+.l4 .hero{background:linear-gradient(135deg,var(--a),var(--b));color:#fff;padding:52px 44px 120px;clip-path:polygon(0 0,100% 0,100% 82%,0 100%);display:flex;gap:22px;align-items:center}
+.l4 .hero p{font-size:1.15rem;opacity:.92;margin-top:6px}
+.l4 .g2{padding:0 44px;margin-top:-52px;position:relative;z-index:1}
+/* L5 */
+.l5{padding:66px 56px}
+.bar{width:72px;height:7px;background:var(--a);margin-bottom:24px}
+.l5 .top{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:40px}
+.l5 .role{color:var(--mut);font-size:1.15rem;font-weight:700;margin-top:4px}
+.l5 .av{border-color:#e5e7eb}
+.tr{display:flex;padding:20px 6px;border-top:1px solid #e5e7eb;font-size:1.05rem;position:relative;z-index:1}.tr:last-of-type{border-bottom:1px solid #e5e7eb}
+.tr span{width:34%;color:var(--mut);font-weight:700}.tr b{font-weight:800;flex:1}
+
+/* ===== Footer ===== */
+.dock{position:fixed;bottom:0;left:0;right:0;z-index:200;display:flex;justify-content:center;gap:14px;align-items:center;flex-wrap:wrap;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(5,8,16,.88);backdrop-filter:blur(16px);border-top:1px solid rgba(96,165,250,.3);box-shadow:0 -10px 30px rgba(37,99,235,.15)}
+.by{font-weight:700;font-size:.95rem;color:#cbd5e1;display:flex;align-items:center;gap:7px}
+.by em{font-style:normal;font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;background:linear-gradient(90deg,#38bdf8,#2563eb,#38bdf8);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:sh 3s linear infinite}
+@keyframes sh{to{background-position:200% center}}
+.vf{color:#1d9bf0;font-size:1.1rem;filter:drop-shadow(0 0 6px rgba(29,155,240,.7))}
+.toast{position:fixed;bottom:100px;left:50%;transform:translate(-50%,30px);background:#0f172a;border:1px solid var(--bd);padding:11px 20px;border-radius:12px;font-weight:700;opacity:0;transition:.4s;z-index:300;pointer-events:none;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1150px){.main{grid-template-columns:1fr;padding:0 12px}}
+@media(max-width:560px){.logo span{display:none}.acts{width:100%}.acts .btn{flex:1;justify-content:center;padding:10px 6px;font-size:.82rem}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+</style>
+</head>
+<body>
+
+<div id="loader" title="اضغط للتخطي">
+  <canvas id="lcode"></canvas>
+  <div class="lname" id="lname" data-t="AHMED IBRAHIM"></div>
+  <div class="lline"></div>
+  <div class="lsub">تم صنع الموقع بواسطة <b>أحمد</b></div>
+  <div class="lbar"><i></i></div>
+</div>
+
+<canvas id="rain"></canvas>
+<div class="orb o1"></div><div class="orb o2"></div>
+
+<header>
+  <div class="logo"><i class="fa-solid fa-file-signature"></i><span>CV Studio Pro</span></div>
+  <div class="acts">
+    <button class="btn pri" id="dl"><i class="fa-solid fa-download"></i> تحميل PDF</button>
+    <button class="btn wa" id="sh"><i class="fa-brands fa-whatsapp"></i> مشاركة</button>
+    <button class="btn sec" id="demo"><i class="fa-solid fa-wand-magic-sparkles"></i> تجريبي</button>
+  </div>
+</header>
+
+<div class="main">
+  <aside class="panel">
+    <div class="st"><i class="fa-solid fa-user-pen"></i> أدخل بياناتك</div>
+    <div class="fgrid" id="form"></div>
+    <div class="tools">
+      <label class="btn sec cbtn"><i class="fa-solid fa-camera"></i> صورة شخصية<input type="file" id="photo" accept="image/*" style="display:none"></label>
+      <label class="btn sec cbtn"><i class="fa-solid fa-droplet"></i> لون مخصص<input type="color" id="color" value="#3b82f6"></label>
+      <button class="btn sec" id="reset"><i class="fa-solid fa-rotate-left"></i> إعادة ضبط</button>
+    </div>
+    <div class="div"></div>
+    <div class="st"><i class="fa-solid fa-palette"></i> اختر التصميم (10 قوالب)</div>
+    <div class="tgrid" id="tpls"></div>
+  </aside>
+  <main class="prev">
+    <div class="tb"><span class="live">معاينة حية (A4)</span><span id="tlabel" style="color:var(--mut);font-weight:700"></span></div>
+    <div class="stage" id="stage"><div class="paper" id="paper"></div></div>
+  </main>
+</div>
+
+<div class="dock">
+  <div class="by">تم صنع الموقع بواسطة <em>Ahmed</em><i class="fa-solid fa-circle-check vf" title="موثّق"></i></div>
+  <a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/201286612806?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%A3%D8%AD%D9%85%D8%AF%D8%8C%20%D8%AA%D9%88%D8%A7%D8%B5%D9%84%D8%AA%20%D9%85%D8%B9%D9%83%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%20CV%20Studio"><i class="fa-brands fa-whatsapp"></i> تواصل خاص على الواتساب</a>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- Loader ---------- */
+(function(){
+  const name="AHMED IBRAHIM",el=$('lname');
+  [...name].forEach((c,i)=>{const s=document.createElement('span');s.className='ch'+(c===' '?' sp':'');s.textContent=c===' '?'\u00a0':c;s.style.setProperty('--d',(i*.09+Math.random()*.25).toFixed(2)+'s');el.appendChild(s)});
+  setTimeout(()=>el.classList.add('gl'),1700);
+  setTimeout(()=>el.classList.remove('gl'),3200);
+  const hide=()=>{$('loader').classList.add('out');setTimeout(()=>$('loader').remove(),900)};
+  setTimeout(hide,3700);$('loader').onclick=hide;
+})();
+
+/* ---------- Code rain (background + loader) ---------- */
+function rain(cv,alpha,fade){
+  const x=cv.getContext('2d'),T="{}[]()<>/=;:+*01$#&|=>".split("");let W,H,cols,y;const S=16;
+  const size=()=>{W=cv.width=innerWidth;H=cv.height=innerHeight;cols=Math.ceil(W/S);y=Array.from({length:cols},()=>Math.random()*-60)};
+  size();addEventListener('resize',size);let last=0;
+  (function f(t){requestAnimationFrame(f);if(t-last<55||!cv.isConnected)return;last=t;
+    x.fillStyle=fade;x.fillRect(0,0,W,H);x.font=S+'px monospace';
+    for(let i=0;i<cols;i++){x.fillStyle=i%3?`rgba(96,165,250,${alpha})`:`rgba(167,139,250,${alpha})`;
+      x.fillText(T[Math.random()*T.length|0],i*S,y[i]*S);
+      if(y[i]*S>H&&Math.random()>.975)y[i]=0;y[i]+=.6+Math.random()*.4}})();
+}
+rain($('rain'),.32,'rgba(7,11,20,.14)');rain($('lcode'),.5,'rgba(4,6,12,.18)');
+
+/* ---------- Templates ---------- */
+const TPL=[
+["الكلاسيكي الرسمي","أخضر زمردي",1,"#0f4c45","#1e786c","#f8fafc","#0f172a","#fff","#64748b","#fff"],
+["الأزرق الملكي","شريط جانبي",2,"#1e293b","#2563eb","#fff","#0f172a","#f1f5f9","#64748b","#f8fafc"],
+["الفخامة الذهبية","أسود وذهبي",3,"#b8932b","#facc15","#121212","#f3f4f6","#1c1c1c","#d4af37","#fff"],
+["الإبداعي المتدرج","بنفسجي ووردي",4,"#4f46e5","#ec4899","#fff","#1e1b4b","#f5f3ff","#6d28d9","#fff"],
+["البساطة السويسرية","أبيض وتنظيم حاد",5,"#111827","#4b5563","#fff","#111827","#fff","#6b7280","#fff"],
+["النيون التكنولوجي","ليلي سيبراني",1,"#0891b2","#22d3ee","#090d16","#e2e8f0","#0f172a","#67e8f9","#041016"],
+["الأكاديمي والطبي","أزرق سماوي",2,"#0369a1","#38bdf8","#f0f9ff","#0c4a6e","#fff","#0284c7","#fff"],
+["الدافئ العصري","برتقالي ورملي",4,"#ea580c","#fb923c","#fffbeb","#431407","#fff","#c2410c","#fff"],
+["البطاقة التنفيذية","نيلي كلاسيكي",3,"#312e81","#4338ca","#fafaff","#1e1b4b","#eef2ff","#4338ca","#fff"],
+["الهندسي الأنيق","أحمر ياقوتي",2,"#be123c","#881337","#f1f5f9","#1e293b","#fff","#64748b","#fff"]];
+const F=[["الاسم بالكامل","name","user"],["السن","age","hourglass-half"],["الديانة","religion","star-and-crescent"],["الوظيفة / الدراسة","job","graduation-cap"],["محل الإقامة","address","location-dot"],["رقم التواصل","phone","phone"],["البريد الإلكتروني","email","envelope"]];
+const IN=[["name","الاسم بالكامل","user","مثال: أحمد محمد علي",1],["age","السن","calendar-days","23 عاماً"],["religion","الديانة","moon","مسلم"],["job","الوظيفة أو الدراسة","graduation-cap","طالب في كلية ...",1],["address","محل الإقامة","location-dot","القاهرة - مدينة نصر",1],["phone","رقم التواصل (اختياري)","phone","01xxxxxxxxx"],["email","البريد (اختياري)","envelope","name@mail.com"],["bio","نبذة مختصرة (اختياري)","quote-right","أسعى لتطوير مهاراتي...",1]];
+const DEF={name:"مجدي السيد عبد المنعم عبده",age:"23 عاماً",religion:"مسلم",job:"طالب في الفرقة الخامسة — كلية الطب البيطري",address:"محافظة الدقهلية — مركز ومدينة أجا",bio:"بيانات شخصية وأكاديمية موثقة ومرتبة بصيغة رسمية."};
+let cur=1,photo="",custom="";
+
+$('form').innerHTML=IN.map(f=>`<div class="fg${f[4]?' full':''}"><label>${f[1]}</label><div class="iw"><input class="fc" id="in-${f[0]}" placeholder="${f[3]}"><i class="fa-solid fa-${f[2]}"></i></div></div>`).join('');
+IN.forEach(f=>$('in-'+f[0]).oninput=()=>{render();save()});
+
+function shade(h,p){const n=parseInt(h.slice(1),16);const c=k=>Math.max(0,Math.min(255,Math.round(((n>>k)&255)*(1+p))));return'#'+((1<<24)|(c(16)<<16)|(c(8)<<8)|c(0)).toString(16).slice(1)}
+const get=()=>{const d={};IN.forEach(f=>d[f[0]]=$('in-'+f[0]).value.trim()||DEF[f[0]]||"");return d};
+const save=()=>{try{const o={};IN.forEach(f=>o[f[0]]=$('in-'+f[0]).value);localStorage.setItem('cvs',JSON.stringify(o))}catch(e){}};
+const R=(f,v,i,c='')=>`<div class="row ${c}" style="--i:${i}"><i class="fa-solid fa-${f[2]}"></i><div><small>${f[0]}</small><b>${esc(v)}</b></div></div>`;
+
+function render(anim){
+  const d=get(),T=TPL[cur-1],L=T[2],p=$('paper');
+  let a=custom||T[3],b=custom?shade(custom,-.3):T[4];
+  const rows=F.slice(1).filter(f=>d[f[1]]);
+  const av=photo?`<img src="${photo}">`:esc(d.name.charAt(0)||"م");
+  const bio=`<div class="bio" style="--i:9">${esc(d.bio)}</div>`;
+  const all=rows.map((f,i)=>R(f,d[f[1]],i)).join('');
+  let h='';
+  if(L==1)h=`<div class="hd"><div class="av">${av}</div><div><span class="tag"><i class="fa-solid fa-id-card"></i> بطاقة تعريفية</span><h1>${esc(d.name)}</h1><p>${esc(d.job)}</p></div></div><div class="stt">البيانات الشخصية</div><div class="g2">${all}</div>${bio}`;
+  if(L==2){const side=rows.filter(f=>f[1]!='job').map((f,i)=>R(f,d[f[1]],i)).join('');
+    h=`<aside><div class="av">${av}</div>${side}</aside><section><h1>${esc(d.name)}</h1><div class="role">${esc(d.job)}</div>${bio}${R(F[0],d.name,1)}${R(F[3],d.job,2)}</section>`}
+  if(L==3)h=`<div class="frame"><div class="av">${av}</div><h1>${esc(d.name)}</h1><div class="role">${esc(d.job)}</div><div class="line"></div><div class="col">${all}</div>${bio}</div>`;
+  if(L==4)h=`<div class="hero"><div class="av">${av}</div><div><h1>${esc(d.name)}</h1><p>${esc(d.job)}</p></div></div><div class="g2">${rows.map((f,i)=>R(f,d[f[1]],i,['job','address','email'].includes(f[1])?'wide':'')).join('')}<div class="bio wide" style="--i:9">${esc(d.bio)}</div></div>`;
+  if(L==5)h=`<div class="bar"></div><div class="top"><div><h1>${esc(d.name)}</h1><div class="role">${esc(d.job)}</div></div><div class="av">${av}</div></div>${rows.map((f,i)=>`<div class="tr r" style="--i:${i}"><span>${f[0]}</span><b>${esc(d[f[1]])}</b></div>`).join('')}<div class="tr" style="--i:9"><span>نبذة</span><b style="font-weight:600;color:#374151">${esc(d.bio)}</b></div>`;
+  p.className=`paper l${L}`+(anim?' anim pop':'');
+  p.setAttribute('style',`--a:${a};--b:${b};--bg:${T[5]};--ink:${T[6]};--card:${T[7]};--mut:${T[8]};--hd:${T[9]}`);
+  p.innerHTML=h+`<div class="pf">تم إنشاء هذا المستند عبر CV Studio</div>`;
+  $('tlabel').textContent=`القالب ${cur}: ${T[0]}`;
+}
+function drawTpl(){$('tpls').innerHTML=TPL.map((t,i)=>`<div class="tc${i+1==cur?' on':''}" onclick="pick(${i+1})"><div class="dot" style="background:linear-gradient(135deg,${t[3]},${t[4]})"></div><div><h4>${i+1}. ${t[0]}</h4><span>${t[1]}</span></div></div>`).join('')}
+function pick(i){cur=i;custom="";drawTpl();render(true)}
+
+/* ---------- Scale to fit ---------- */
+function fit(){const s=Math.min(1,($('stage').clientWidth-4)/794);$('paper').style.transform=`scale(${s})`;$('stage').style.height=(1122*s)+'px'}
+addEventListener('resize',fit);
+
+/* ---------- Photo / color / demo / reset ---------- */
+$('photo').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{photo=r.result;render();toast('تمت إضافة الصورة ✓')};r.readAsDataURL(f)};
+$('color').oninput=e=>{custom=e.target.value;render()};
+$('demo').onclick=()=>{Object.keys(DEF).forEach(k=>$('in-'+k).value=DEF[k]);$('in-bio').value="طالب بالفرقة الخامسة بكلية الطب البيطري، مهتم بالتطوير المستمر والعمل الميداني والبحثي.";$('in-phone').value="01012345678";render(true);save();toast('تمت تعبئة بيانات تجريبية')};
+$('reset').onclick=()=>{IN.forEach(f=>$('in-'+f[0]).value="");photo="";custom="";render();save();toast('تمت إعادة الضبط')};
+
+/* ---------- PDF: download + WhatsApp share ---------- */
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2600)}
+async function makePdf(){
+  const c=$('paper').cloneNode(true);c.classList.add('exp');c.style.transform='none';c.style.height='1120px';
+  const h=document.createElement('div');h.style.cssText='position:fixed;left:-9999px;top:0';h.appendChild(c);document.body.appendChild(h);
+  try{await document.fonts.ready;return await html2pdf().set({margin:0,image:{type:'jpeg',quality:.98},html2canvas:{scale:2,useCORS:true,scrollX:0,scrollY:0},jsPDF:{unit:'px',format:[794,1122],orientation:'portrait',hotfixes:['px_scaling']}}).from(c).outputPdf('blob')}
+  finally{h.remove()}
+}
+const fname=()=>`${($('in-name').value.trim()||'السيرة_الذاتية').replace(/[\\/:*?"<>|]/g,'')}_قالب_${cur}.pdf`;
+async function run(btn,fn){const o=btn.innerHTML;btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> لحظة...';try{await fn()}catch(e){console.error(e);toast('حصلت مشكلة، جرّب تاني')}btn.innerHTML=o;btn.disabled=false}
+function saveBlob(b,n){const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
+$('dl').onclick=()=>run($('dl'),async()=>{saveBlob(await makePdf(),fname());toast('تم تحميل الملف على جهازك ✓')});
+$('sh').onclick=()=>run($('sh'),async()=>{
+  const b=await makePdf(),f=new File([b],fname(),{type:'application/pdf'});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:'بطاقة بياناتي',text:'ملف PDF من CV Studio'});return}catch(e){if(e.name==='AbortError')return}}
+  saveBlob(b,fname());toast('تم تحميل الملف — ابعته من الواتساب');
+  setTimeout(()=>window.open('https://wa.me/?text='+encodeURIComponent('بعتلك ملف بياناتي (PDF) — اتعمل من CV Studio'),'_blank'),900);
+});
+
+/* ---------- Init ---------- */
+try{const o=JSON.parse(localStorage.getItem('cvs')||'{}');IN.forEach(f=>{if(o[f[0]])$('in-'+f[0]).value=o[f[0]]})}catch(e){}
+drawTpl();render(true);fit();
+</script>
+</body>
+</html>
